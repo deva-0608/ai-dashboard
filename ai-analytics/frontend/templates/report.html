@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<h2>Design → Reports</h2>
+
+<ul class="report-list">
+  <li onclick="openReport('custom-report', 33)">Custom Report – 33</li>
+  <li onclick="openReport('project-report', 47)">Project Report – 47</li>
+  <li onclick="openReport('document-report', 52)">Document Report – 52</li>
+</ul>
+
+<script>
+function openReport(type, id) {
+  window.location.href = `/reports/design/${type}/detail/${id}.html`;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Report Detail</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Report Detail</h2>
+
+  <button onclick="openDashboard()">Open AI Dashboard</button>
+
+  <table class="custom-table">
+    <thead><tr></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+const API = "http://localhost:8000";
+
+/* ================================
+   READ URL PARAMS (CORRECT)
+================================ */
+const params = new URLSearchParams(window.location.search);
+const reportType = params.get("report_type");   // custom-report
+const reportId   = params.get("report_id");     // 33
+
+if (!reportType || !reportId) {
+  alert("Missing report_type or report_id in URL");
+}
+
+/* ================================
+   FETCH EXCEL DATA
+================================ */
+fetch(`${API}/reports/design/${reportType}/detail/${reportId}/data`)
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("Failed to load report data");
+    }
+    return res.json();
+  })
+  .then(data => {
+    const thead = document.querySelector("thead tr");
+    const tbody = document.querySelector("tbody");
+
+    // Render headers
+    thead.innerHTML = "";
+    data.columns.forEach(col => {
+      thead.innerHTML += `<th>${col}</th>`;
+    });
+
+    // Render rows
+    tbody.innerHTML = "";
+    data.rows.forEach(row => {
+      const tr = document.createElement("tr");
+      data.columns.forEach(col => {
+        tr.innerHTML += `<td>${row[col] ?? ""}</td>`;
+      });
+      tbody.appendChild(tr);
+    });
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Error loading Excel data");
+  });
+
+/* ================================
+   OPEN AI DASHBOARD
+================================ */
+function openDashboard() {
+  window.location.href =
+    `ai-dashboard.html?report_type=${reportType}&report_id=${reportId}`;
+}
+</script>
+
+
+</body>
+</html>

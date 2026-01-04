@@ -1,0 +1,28 @@
+# ------------------------
+# Core Backend
+# ------------------------
+fastapi
+uvicorn
+
+# ------------------------
+# Data handling
+# ------------------------
+pandas
+openpyxl
+
+# ------------------------
+# LangGraph + LangChain
+# ------------------------
+langgraph
+langchain
+langchain-google-genai
+
+# ------------------------
+# Environment management
+# ------------------------
+python-dotenv
+
+# ------------------------
+# Optional (recommended)
+# ------------------------
+typing-extensions

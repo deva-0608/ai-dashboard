@@ -1,18 +1,33 @@
+# backend/langgraph/agents/insight_agent.py
+
 from state import DashboardState
-from utils.llm_factory import get_llm
+from utils.llm_factory import generate_with_gemini
+
 
 def insight_agent(state: DashboardState) -> dict:
-    llm = get_llm(temperature=0)
+    """
+    Generates a human-readable insight / executive summary
+    based on KPIs and the user prompt.
+    """
 
     prompt = f"""
-Generate a short executive summary.
+You are an analytics assistant.
 
 User question:
 {state["prompt"]}
 
-KPIs:
+Computed KPIs:
 {state.get("kpis", [])}
+
+Write a short, clear executive summary in plain English.
+Avoid technical jargon.
 """
 
-    summary = llm.invoke(prompt).content
-    return {"summary": summary}
+    summary = generate_with_gemini(
+        prompt,
+        fallback_text="No AI insights available for this report."
+    )
+
+    return {
+        "summary": summary
+    }

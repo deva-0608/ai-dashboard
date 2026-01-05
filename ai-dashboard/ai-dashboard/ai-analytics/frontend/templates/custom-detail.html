@@ -7,14 +7,21 @@
 <body>
 
 <div class="container">
-  <h2>Report Detail</h2>
 
-  <button onclick="openDashboard()">Open AI Dashboard</button>
+  <div class="custom-header-row">
+    <h2 class="page-title">Report Detail</h2>
+    <button class="ai-btn" onclick="openDashboard()">AI DASHBOARD</button>
+  </div>
 
-  <table class="custom-table">
-    <thead><tr></tr></thead>
-    <tbody></tbody>
-  </table>
+  <div class="custom-table-card">
+    <table class="custom-table">
+      <thead>
+        <tr></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
 </div>
 
 <script>
@@ -24,8 +31,8 @@ const API = "http://localhost:8000";
    READ URL PARAMS (CORRECT)
 ================================ */
 const params = new URLSearchParams(window.location.search);
-const reportType = params.get("report_type");   // custom-report
-const reportId   = params.get("report_id");     // 33
+const reportType = params.get("report_type");
+const reportId   = params.get("report_id");
 
 if (!reportType || !reportId) {
   alert("Missing report_type or report_id in URL");
@@ -45,13 +52,11 @@ fetch(`${API}/reports/design/${reportType}/detail/${reportId}/data`)
     const thead = document.querySelector("thead tr");
     const tbody = document.querySelector("tbody");
 
-    // Render headers
     thead.innerHTML = "";
     data.columns.forEach(col => {
       thead.innerHTML += `<th>${col}</th>`;
     });
 
-    // Render rows
     tbody.innerHTML = "";
     data.rows.forEach(row => {
       const tr = document.createElement("tr");
@@ -74,7 +79,6 @@ function openDashboard() {
     `ai-dashboard.html?report_type=${reportType}&report_id=${reportId}`;
 }
 </script>
-
 
 </body>
 </html>

@@ -7,16 +7,59 @@
 </head>
 <body>
 
-<div class="dashboard">
-  <div class="charts">
-    <div class="chart-card"></div>
-    <div class="chart-card"></div>
-    <div class="chart-card"></div>
+<div class="container">
+
+  <div class="custom-header-row">
+    <h2 class="page-title">AI Dashboard</h2>
+    <span class="breadcrumb">
+      Design → Report → Dashboard
+    </span>
   </div>
 
-  <div class="chat">
-    <div id="chat-messages"></div>
-    <input id="chat-input" placeholder="Ask something..." />
+  <div class="dashboard-layout">
+
+    <!-- LEFT: CHARTS -->
+    <div class="dashboard-main">
+      <div class="charts">
+        <div class="chart-card"></div>
+        <div class="chart-card"></div>
+        <div class="chart-card"></div>
+      </div>
+
+      <div class="table-section">
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="2" style="text-align:center; color:#777;">
+                Ask a question to generate insights
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RIGHT: CHAT -->
+    <div class="chat-panel">
+      <div class="chat-header">AI Assistant</div>
+
+      <div id="chat-messages" class="chat-messages"></div>
+
+      <div class="chat-input">
+        <input
+          id="chat-input"
+          placeholder="Ask something..."
+        />
+        <button onclick="send()">Send</button>
+      </div>
+    </div>
+
   </div>
 </div>
 

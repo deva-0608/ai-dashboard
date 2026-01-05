@@ -1,13 +1,13 @@
 from state import DashboardState
 from utils.schema_utils import build_schema_context
 
+
 def schema_agent(state: DashboardState) -> dict:
     df = state["dataframe"]
 
     if not hasattr(df, "columns"):
-        raise ValueError(
-            "state['dataframe'] must be a pandas DataFrame"
-        )
+        raise ValueError("state['dataframe'] must be a pandas DataFrame")
 
     schema = build_schema_context(df)
+    print(schema)
     return {"schema": schema}

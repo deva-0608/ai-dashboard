@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 import pandas as pd
 
 # Internal imports (based on locked structure)
-from config import settings
+from config import settings,DATA_ROOT
 from excel_loader import (
     validate_report_type,
     load_excel_dataframe,
@@ -54,7 +54,8 @@ from excel_loader import find_excel_file
 def list_reports(report_type: str):
     validate_report_type(report_type)
 
-    base_dir = settings.DATA_ROOT / report_type
+    base_dir = DATA_ROOT / report_type
+
     results = []
 
     for report_dir in base_dir.iterdir():
@@ -79,7 +80,7 @@ def list_reports(report_type: str):
 @app.get("/reports/design/{report_type}/detail/{report_id}/data")
 def report_detail_data(report_type: str, report_id: str):
     df, project_name = load_excel_dataframe(report_type, report_id)
-    return dataframe_to_response(df, project_name)
+    return dataframe_to_response(df.head(10), project_name)
 
 # --------------------------------------------------
 # 4️⃣ REPORT DETAIL – CHATBOT → DASHBOARD

@@ -15,8 +15,8 @@ Return JSON ONLY:
 {{
   "group_by": ["column"],
   "metric": "column",
-  "aggregation": "count | sum | avg",
-  "charts": ["bar", "pie"]
+  "aggregation": "count | sum | avg | min | max",
+  "charts": ["bar", "pie","line","scatter"]
 }}
 """
 

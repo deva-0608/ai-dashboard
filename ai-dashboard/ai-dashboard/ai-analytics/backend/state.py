@@ -34,20 +34,11 @@ class DashboardState(TypedDict):
     # -----------------------------
     # User input
     # -----------------------------
-    prompt: str                 # chatbot question
-
-    # -----------------------------
-    # Data
-    # -----------------------------
-    dataframe: pd.DataFrame     # loaded Excel data
-    schema: Dict[str, Any]      # inferred schema context
-
-    # -----------------------------
-    # Agent outputs
-    # -----------------------------
-    intent: Dict[str, Any]      # parsed intent (planner agent)
-    aggregated_data: Dict[str, Any]  # grouped / computed results
-
-    charts: List[ChartSpec]     # multiple charts (ECharts-ready)
-    kpis: List[KPI]             # KPI tiles
-    summary: str                # textual insights
+    dataframe: pd.DataFrame
+    aggregated_data: dict
+    intent: dict
+    schema: dict
+    charts: list
+    kpis: list
+    summary: str
+    prompt: str       # textual insights

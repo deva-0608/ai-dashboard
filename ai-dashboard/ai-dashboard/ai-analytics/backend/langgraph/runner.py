@@ -36,16 +36,20 @@ def make_json_safe(obj):
 # --------------------------------------------------
 # Helper node: inject final columns (SAFE)
 # --------------------------------------------------
+# --------------------------------------------------
+# Helper node: inject final columns (SAFE)
+# --------------------------------------------------
 def inject_final_columns(state: DashboardState) -> dict:
     table = state.get("aggregated_data", {}).get("table")
-    if table is not None:
-        return {
-            "intent": {
-                **state.get("intent", {}),
-                "_available_columns": table.columns.tolist()
-            }
-        }
-    return {}
+    if table is None:
+        return {}
+
+    # 🔑 copy intent to avoid shared reference mutation
+    intent = state.get("intent", {}).copy()
+    intent["_available_columns"] = table.columns.tolist()
+
+    return {"intent": intent}
+
 
 
 # --------------------------------------------------
@@ -100,7 +104,6 @@ def run_langgraph(initial_state: DashboardState):
         "charts": final_state.get("charts", []),
         "data": data
     }
-
-    print("✅ FINAL DASHBOARD OUTPUT:", response)
+    print(response["kpis"])
 
     return make_json_safe(response)

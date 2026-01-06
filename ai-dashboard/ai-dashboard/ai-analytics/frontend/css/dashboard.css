@@ -9,8 +9,8 @@
 
 body {
   margin: 0;
-  background: #f3f5f8;
-  color: #1f2937;
+  background: #fffdf5; /* light warm yellow */
+  color: #3b3b3b;
 }
 
 a {
@@ -19,7 +19,7 @@ a {
 }
 
 .link a {
-  color: #1e88e5;
+  color: #d97706; /* amber */
   font-weight: 500;
 }
 
@@ -47,11 +47,11 @@ a {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #111827;
+  color: #3b3b3b;
 }
 
 /* =========================================================
-   REPORTS CARDS PAGE (index.html)
+   REPORTS CARDS PAGE
 ========================================================= */
 
 .cards {
@@ -64,7 +64,7 @@ a {
   background: #ffffff;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(234,179,8,0.15);
   border-top: 4px solid transparent;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   cursor: pointer;
@@ -72,7 +72,7 @@ a {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.14);
+  box-shadow: 0 10px 28px rgba(234,179,8,0.25);
 }
 
 .card h3 {
@@ -91,7 +91,7 @@ a {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #eef2f7;
+  background: #fff7cc;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,11 +99,11 @@ a {
 }
 
 /* Card colors */
-.red    { border-top-color: #e53935; }
-.green  { border-top-color: #2ecc71; }
-.blue   { border-top-color: #1e88e5; }
-.purple { border-top-color: #7e57c2; }
-.gray   { border-top-color: #9e9e9e; }
+.red    { border-top-color: #f87171; }
+.green  { border-top-color: #4ade80; }
+.blue   { border-top-color: #60a5fa; }
+.purple { border-top-color: #c084fc; }
+.gray   { border-top-color: #d1d5db; }
 
 /* =========================================================
    TABLES (COMMON)
@@ -119,19 +119,19 @@ a {
 .custom-table th,
 .custom-table td {
   padding: 12px 14px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #f1e6b2;
   text-align: left;
   white-space: nowrap;
 }
 
 .custom-table th {
   font-weight: 600;
-  color: #374151;
-  background: #f9fafb;
+  color: #6b5e2e;
+  background: #fff7cc;
 }
 
 .custom-table tbody tr:hover {
-  background: #f8fafc;
+  background: #fffbe6;
 }
 
 /* =========================================================
@@ -142,25 +142,25 @@ a {
 .table-section {
   background: #ffffff;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #f1e6b2;
   overflow: auto;
 }
 
 /* =========================================================
-   CUSTOM REPORT LIST (detail.html)
+   BREADCRUMB
 ========================================================= */
 
 .breadcrumb {
   font-size: 13px;
-  color: #6b7280;
+  color: #9a8b3c;
 }
 
 .breadcrumb span {
-  color: #1f2937;
+  color: #3b3b3b;
 }
 
 /* =========================================================
-   CUSTOM DETAIL PAGE (custom-detail.html)
+   CUSTOM DETAIL PAGE
 ========================================================= */
 
 .custom-header-row {
@@ -170,8 +170,8 @@ a {
 }
 
 .ai-btn {
-  background: #000000;
-  color: #ffd400;
+  background: #facc15;
+  color: #3b3b3b;
   font-weight: 700;
   padding: 9px 16px;
   border: none;
@@ -187,7 +187,7 @@ a {
   margin: 12px 0 18px;
   font-size: 18px;
   font-weight: 600;
-  color: #374151;
+  color: #3b3b3b;
 }
 
 /* =========================================================
@@ -197,7 +197,7 @@ a {
 .accordion {
   background: #ffffff;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #f1e6b2;
   margin-bottom: 18px;
 }
 
@@ -206,7 +206,7 @@ a {
   font-weight: 600;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #f1e6b2;
 }
 
 .accordion-body {
@@ -214,7 +214,7 @@ a {
 }
 
 /* =========================================================
-   DASHBOARD PAGE (dashboard.html)
+   DASHBOARD PAGE
 ========================================================= */
 
 .dashboard-layout {
@@ -231,7 +231,7 @@ a {
 
 .charts {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 14px;
 }
 
@@ -239,12 +239,12 @@ a {
   height: 230px;
   background: #ffffff;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #f1e6b2;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
-  color: #6b7280;
+  color: #8a7c3a;
 }
 
 /* =========================================================
@@ -256,20 +256,21 @@ a {
   flex-direction: column;
   background: #ffffff;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #f1e6b2;
   overflow: hidden;
 }
 
 .chat-header {
   padding: 12px 14px;
   font-weight: 600;
-  border-bottom: 1px solid #e5e7eb;
+  background: #fff7cc;
+  border-bottom: 1px solid #f1e6b2;
 }
 
 .chat-messages {
   flex: 1;
   padding: 14px;
-  background: #f9fafb;
+  background: #fffbe6;
   overflow-y: auto;
 }
 
@@ -282,12 +283,13 @@ a {
 }
 
 .msg.left {
-  background: #e5e7eb;
+  background: #fff1b3;
+  color: #3b3b3b;
 }
 
 .msg.right {
-  background: #1e88e5;
-  color: #ffffff;
+  background: #facc15;
+  color: #3b3b3b;
   margin-left: auto;
 }
 
@@ -295,17 +297,23 @@ a {
   display: flex;
   gap: 8px;
   padding: 12px;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #f1e6b2;
+  background: #fffdf5;
 }
 
 .chat-input input {
   flex: 1;
   padding: 8px 10px;
   font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #f1e6b2;
 }
 
 .chat-input button {
   padding: 8px 14px;
   font-size: 13px;
+  background: #facc15;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
 }

@@ -1,30 +1,243 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>AI Dashboard</title>
-  <link rel="stylesheet" href="../css/dashboard.css">
+
   <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #fffbea;
+      --card: #ffffff;
+      --border: #f1e7c6;
+      --text: #3b3b3b;
+      --muted: #8a7f55;
+      --primary: #f4b400;
+      --ai-bg: #fff4cc;
+      --user-bg: #f4b400;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      padding: 24px 28px;
+    }
+
+    /* HEADER */
+    .custom-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* LAYOUT */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 3fr 1.2fr;
+      gap: 20px;
+    }
+
+    .dashboard-main {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* CHART GRID */
+    /* ================================
+   CHART GRID (RESPONSIVE)
+================================ */
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+/* ================================
+   CHART CARD
+================================ */
+.chart-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 14px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================================
+   CHART TITLE
+================================ */
+.chart-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+/* ================================
+   ECHART CONTAINER
+================================ */
+.chart-inner {
+  width: 100%;
+  height: 340px;   /* 🔑 fixed height prevents overlap */
+}
+
+
+    /* TABLE */
+    .table-section {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      font-size: 13px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      text-align: left;
+    }
+
+    td {
+      padding: 10px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #f5edd1;
+    }
+
+    /* CHAT PANEL */
+    .chat-panel {
+      background: var(--card);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 120px);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 14px 16px;
+      font-weight: 600;
+      background: #fff2c2;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #fffdf4;
+    }
+
+    /* MESSAGE BUBBLES */
+    .msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .msg.user {
+      align-self: flex-end;
+      background: var(--user-bg);
+      color: #1f1f1f;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg.ai {
+      align-self: flex-start;
+      background: var(--ai-bg);
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+
+    /* INPUT */
+    .chat-input {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      background: #fff8dc;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .chat-input button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      background: var(--primary);
+      color: #1f1f1f;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .chat-input button:hover {
+      background: #e0a800;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <div class="container">
 
   <div class="custom-header-row">
     <h2 class="page-title">AI Dashboard</h2>
-    <span class="breadcrumb">
-      Design → Report → Dashboard
-    </span>
+    <span class="breadcrumb">Design → Report → Dashboard</span>
   </div>
 
   <div class="dashboard-layout">
 
-    <!-- LEFT: CHARTS -->
+    <!-- LEFT -->
     <div class="dashboard-main">
-      <div class="charts">
-        <div class="chart-card"></div>
-        <div class="chart-card"></div>
-        <div class="chart-card"></div>
-      </div>
+
+     
 
       <div class="table-section">
         <table>
@@ -34,28 +247,26 @@
               <th>Value</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="kpi-table">
             <tr>
-              <td colspan="2" style="text-align:center; color:#777;">
+              <td colspan="2" style="text-align:center; color:#8a7f55;">
                 Ask a question to generate insights
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <div class="charts" id="charts-container"></div>
+
     </div>
 
-    <!-- RIGHT: CHAT -->
+    <!-- CHAT -->
     <div class="chat-panel">
       <div class="chat-header">AI Assistant</div>
-
       <div id="chat-messages" class="chat-messages"></div>
 
       <div class="chat-input">
-        <input
-          id="chat-input"
-          placeholder="Ask something..."
-        />
+        <input id="chat-input" placeholder="Ask something..." />
         <button onclick="send()">Send</button>
       </div>
     </div>
@@ -64,5 +275,6 @@
 </div>
 
 <script src="../js/chatbot.js"></script>
+
 </body>
 </html>

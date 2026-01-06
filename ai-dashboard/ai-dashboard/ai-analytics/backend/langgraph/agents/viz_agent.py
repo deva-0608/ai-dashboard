@@ -5,13 +5,24 @@ from utils.charts_utils import build_chart
 import pandas as pd
 
 
+COUNT_ALIASES = {
+    "count",
+    "total",
+    "frequency",
+    "species_count",
+    "row_count"
+}
+
+
 def viz_agent(state: DashboardState) -> dict:
     """
-    Validate chart feasibility against available dataframe
-    and return only workable charts.
+    Viz agent:
+    - Uses FINAL dataframe (after computations)
+    - Fixes bad LLM chart specs automatically
+    - Produces only meaningful charts
     """
 
-    df = state.get("aggregated_data", {}).get("table")
+    df: pd.DataFrame | None = state.get("aggregated_data", {}).get("table")
     intent = state.get("intent", {})
     chart_specs = intent.get("charts", [])
 
@@ -20,57 +31,38 @@ def viz_agent(state: DashboardState) -> dict:
 
     charts = []
 
-    for i, spec in enumerate(chart_specs):
-        chart_type = spec.get("type")
-        x = spec.get("x")
-        y = spec.get("y")
-        title = spec.get("title")
-
-        if not chart_type:
-            continue
-
-        # -----------------------------
-        # FEASIBILITY CHECKS
-        # -----------------------------
+    for spec in chart_specs:
         try:
-            # Bar / Line / Area
-            if chart_type in {"bar", "line", "area"}:
-                if x not in df.columns or y not in df.columns:
-                    continue
+            chart_type = spec.get("type")
+            x = spec.get("x")
+            y = spec.get("y")
+            title = spec.get("title")
 
-            # Histogram
-            elif chart_type == "histogram":
-                if x not in df.columns:
-                    continue
+            # -------------------------
+            # BASIC VALIDATION
+            # -------------------------
+            if not chart_type or not x or x not in df.columns:
+                continue
+
+            # -------------------------
+            # NORMALIZE y = count aliases
+            # -------------------------
+            if isinstance(y, str) and y.lower() in COUNT_ALIASES:
+                y = None  # force COUNT plot
+
+            # -------------------------
+            # HISTOGRAM FIX
+            # categorical histogram → bar count
+            # -------------------------
+            if chart_type == "histogram":
                 if not pd.api.types.is_numeric_dtype(df[x]):
-                    continue
+                    chart_type = "bar"
+                    y = None
 
-            # Scatter
-            elif chart_type == "scatter":
-                if x not in df.columns or y not in df.columns:
-                    continue
-                if not (
-                    pd.api.types.is_numeric_dtype(df[x]) and
-                    pd.api.types.is_numeric_dtype(df[y])
-                ):
-                    continue
-
-            # Pie / Donut
-            elif chart_type in {"pie", "donut"}:
-                if x not in df.columns:
-                    continue
-
-            # Table
-            elif chart_type == "table":
-                pass  # always valid
-
-            else:
-                continue  # unsupported chart
-
-            # -----------------------------
-            # CHART IS VALID → APPEND
-            # -----------------------------
-            chart = build_chart(
+            # -------------------------
+            # BUILD CHART
+            # -------------------------
+            option = build_chart(
                 df=df,
                 chart_type=chart_type,
                 x=x,
@@ -78,12 +70,14 @@ def viz_agent(state: DashboardState) -> dict:
                 title=title
             )
 
-            charts.append({
-                "id": f"chart_{i + 1}",
-                "spec": chart
-            })
+            if option:
+                charts.append({
+                    "id": f"chart_{len(charts) + 1}",
+                    "option": option
+                })
 
-        except Exception:
+        except Exception as e:
+            print("⚠️ Chart skipped:", e)
             continue
 
     return {"charts": charts}
